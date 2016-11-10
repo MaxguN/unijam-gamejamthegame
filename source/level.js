@@ -14,7 +14,7 @@ function Level(renderer) {
 	this.width = 0;
 	this.height = 0;
 
-	this.background = PIXI.Sprite.fromImage('textures/background.jpg');
+	this.background = PIXI.Sprite.fromImage('textures/background.png');
 	this.table = PIXI.Sprite.fromImage('textures/table.png');
 	this.screen = PIXI.Sprite.fromImage('textures/screen.png');
 	this.keyboard = PIXI.Sprite.fromImage('textures/keyboard.png');
@@ -178,6 +178,10 @@ Level.prototype.Tick = function(length) {
 			case this.phases.init:
 				// timer
 				// add desk + screen
+				this.dynamic.addChild(this.table);
+				this.table.x = (renderer.width - this.table.width) / 2;
+				this.table.y = (renderer.height - this.table.height) / 2;
+				this.dynamic.addChild(this.screen);
 				break;
 			case this.phases.one:
 				// react to controls
@@ -206,6 +210,7 @@ Level.prototype.Tick = function(length) {
 				break;
 			default:
 				// add player
+				this.phase = this.phases.init;
 				break;
 		}
 

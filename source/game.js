@@ -10,14 +10,15 @@ var level;
 // var menu = new Menu(renderer);
 var currentScene;
 
+var loader = PIXI.loader;
 var textures = [
-	'textures/background.jpg',
-	'textures/human.png',
-	'textures/chair.png',
-	'textures/table.png',
-	'textures/screen.png',
-	'textures/keyboard.png',
-	'textures/tablet.png'
+	['background', 'textures/background.png'],
+	['human', 'textures/human.png'],
+	['chair', 'textures/chair.png'],
+	['table', 'textures/table.png'],
+	['screen', 'textures/screen.png'],
+	['keyboard', 'textures/keyboard.png'],
+	['tablet', 'textures/tablet.png']
 ];
 var texCount = 0;
 
@@ -28,20 +29,18 @@ function tick(length) {
 ticker.add(tick)
 
 textures.forEach(function (texture) {
-	texCount += 1;
-	load.image(texture, function () {
-		texCount -= 1;
+	loader.add(texture[0], texture[1]);
+});
 
-		if (texCount === 0) {
-			level = new Level(renderer);
+loader.once('complete', function () {
+	level = new Level(renderer);
 
-			currentScene = level;
-			currentScene.ready(function () {
-			    ticker.start();
-			});
-		}
+	currentScene = level;
+	currentScene.ready(function () {
+	    ticker.start();
 	});
 });
+loader.load();
 
 document.addEventListener('keydown', onkeydown);
 document.addEventListener('keyup', onkeyup);
