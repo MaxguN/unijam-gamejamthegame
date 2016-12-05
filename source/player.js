@@ -6,6 +6,7 @@ function Player(x, y, level) {
 	this.chair = PIXI.Sprite.fromImage('textures/chair.png');
 
 	this.level = level;
+	this.container = new PIXI.Container();
 
 	this.Init();
 }
@@ -14,33 +15,40 @@ Player.prototype.Init = function () {
 	var self = this;
 	var ratio;
 
-	console.log(this.human.width, this.human.height)
-
-	ratio = 100 / this.human.width;
-	this.human.width = 100;
+	ratio = 180 / this.human.width;
+	this.human.width = 180;
 	this.human.height = ratio * this.human.height;
 
 	this.human.x = (renderer.width - this.human.width) / 2;
 	this.human.y = (renderer.height - this.human.height);
 
-	ratio = 100 / this.chair.width;
-	this.chair.width = 100;
+	ratio = 220 / this.chair.width;
+	this.chair.width = 220;
 	this.chair.height = ratio * this.chair.height;
 
-	this.level.dynamic.addChild(this.human);
+	this.chair.x = (renderer.width - this.chair.width) / 2;
+	this.chair.y = (renderer.height - this.chair.height) + 150;
+
+	this.container.addChild(this.human);
 	this.current = this.human;
+
+	this.level.dynamic.addChild(this.container);
 }
 
 Player.prototype.Sit = function () {
-	this.level.dynamic.removeChild(this.human);
-	this.level.dynamic.addChild(this.chair);
-	this.current = this.chair;
+	if (this.current !== this.chair) {
+		this.container.removeChild(this.human);
+		this.container.addChild(this.chair);
+		this.current = this.chair;
+	}
 }
 
 Player.prototype.Stand = function () {
-	this.level.dynamic.removeChild(this.chair);	
-	this.level.dynamic.addChild(this.human);
-	this.current = this.human;
+	if (this.current !== this.human) {
+		this.container.removeChild(this.chair);
+		this.container.addChild(this.human);
+		this.current = this.human;
+	}
 }
 
 Player.prototype.Tick = function (length) {

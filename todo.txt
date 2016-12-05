@@ -1,0 +1,8 @@
+X - Implement last phases
+X - Store mouse input
+X - Display mouse input
+X	- Realtime
+X	- Animation
+X - Display code (screenshots)
+X - Add credits
+X - Draw when clicked

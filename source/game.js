@@ -18,7 +18,8 @@ var textures = [
 	['table', 'textures/table.png'],
 	['screen', 'textures/screen.png'],
 	['keyboard', 'textures/keyboard.png'],
-	['tablet', 'textures/tablet.png']
+	['tablet', 'textures/tablet.png'],
+	['code', 'textures/code.png']
 ];
 var texCount = 0;
 

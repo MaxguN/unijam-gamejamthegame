@@ -1,4 +1,5 @@
 var keys = {
+	any : 'any',
 	escape : 'Escape',
 	space : 'Space',
 	ctrl : 'ControlLeft',
@@ -36,11 +37,15 @@ function onkeydown(event) {
 	if (keydown[event.code] === undefined) {
 		keydown[event.code] = true;
 	}
+	if (keydown[keys.any] === undefined) {
+		keydown[keys.any] = true;
+	}
 }
 
 function onkeyup (event) {
 	preventDefault(event);
 	delete keydown[event.code];
+	delete keydown[keys.any];
 }
 
 function IsMoving() {
@@ -89,6 +94,7 @@ var mouse = (function () {
 		left : false,
 		middle : false,
 		right : false,
+		moved : false,
 		on : on,
 		off : off,
 		down : onmousedown,
@@ -123,6 +129,7 @@ var mouse = (function () {
 	function onmousemove(event) {
 		data.x = event.layerX;
 		data.y = event.layerY;
+		data.moved = true;
 
 		listeners.mousemove.forEach(function (listener) {
 			listener(event);
